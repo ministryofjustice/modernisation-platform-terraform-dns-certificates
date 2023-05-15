@@ -14,10 +14,10 @@ resource "aws_route53_record" "www-dev" {
 
 resource "aws_acm_certificate" "acm_certificate" {
 
-  domain_name   = aws_route53_record.www-dev.fqdn
-  validation_method = "DNS"
+  domain_name               = aws_route53_record.www-dev.fqdn
+  validation_method         = "DNS"
   subject_alternative_names = var.environment == "production" ? null : [local.domain_name]
-  
+
   tags = var.tags
   lifecycle {
     prevent_destroy = false

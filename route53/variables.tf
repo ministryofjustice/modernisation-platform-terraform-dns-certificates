@@ -22,3 +22,13 @@ variable "record_type" {
   default = "CNAME"
   
 }
+variable "set_identifier" {
+  type = string
+  description = "Unique identifier to differentiate records with routing policies from one another."
+  
+}
+variable "record" {
+  type = string
+  description = "A string list of records. To specify a single record value longer than 255 characters such as a TXT record for DKIM"
+  
+}

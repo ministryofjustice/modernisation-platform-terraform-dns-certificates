@@ -8,13 +8,13 @@ resource "aws_route53_record" "www-dev" {
     weight = 10
   }
 
-  set_identifier = "dev"
+  set_identifier = var.set_identifier
   records        = ["dev.example.com"]
 }
 
 resource "aws_acm_certificate" "acm_certificate" {
 
-  domain_name   = var.acm_cert_domain_name
+  domain_name   = aws_route53_record.www-dev.fqdn
   validation_method = "DNS"
   subject_alternative_names = var.environment == "production" ? null : [local.domain_name]
   

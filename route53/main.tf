@@ -13,10 +13,9 @@ resource "aws_route53_record" "www-dev" {
 }
 
 resource "aws_acm_certificate" "acm_certificate" {
-
+  count = var.acm_certificate_needed ? 1 : 0
   domain_name   = aws_route53_record.www-dev.fqdn
   validation_method = "DNS"
-  subject_alternative_names = var.environment == "production" ? null : [local.domain_name]
   
   tags = var.tags
   lifecycle {
@@ -25,6 +24,7 @@ resource "aws_acm_certificate" "acm_certificate" {
 }
 
 resource "aws_acm_certificate_validation" "acm_certificate_validation" {
+  depends_on = [ aws_acm_certificate.acm_certificate ]
   certificate_arn         = aws_acm_certificate.acm_certificate.arn
   validation_record_fqdns = var.environment != "production" ? [local.domain_name_main[0], local.domain_name_sub[0]] : [local.domain_name_main[0]]
 
@@ -34,4 +34,10 @@ resource "aws_acm_certificate_validation" "acm_certificate_validation" {
   lifecycle {
     prevent_destroy = false
   }
+}
+
+module "gandi_certificate" {
+  count = var.gandi_certificate_needed ? 1 :0
+  source = "../certificates"
+  
 }

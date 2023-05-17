@@ -32,3 +32,13 @@ variable "record" {
   description = "A string list of records. To specify a single record value longer than 255 characters such as a TXT record for DKIM"
   
 }
+variable "acm_certificate_needed" {
+  description = "Flag to determin if acm certificate if needed"
+  type = bool
+  
+}
+variable "gandi_certificate_needed" {
+  description = "Flag to determin if gandi certificate is needed"
+  type = bool
+  
+}

@@ -9,26 +9,26 @@ variable "application_name" {
 variable "zone" {
   type        = string
   description = "Zone"
-  
+
 }
 variable "dns_name" {
   type        = string
   description = "DNS name to be used with the zone"
-  
+
 }
 variable "record_type" {
-  type = string
+  type        = string
   description = "type of record to create"
-  default = "CNAME"
-  
+  default     = "CNAME"
+
 }
 variable "set_identifier" {
-  type = string
+  type        = string
   description = "Unique identifier to differentiate records with routing policies from one another."
-  
+
 }
 variable "record" {
-  type = string
+  type        = string
   description = "A string list of records. To specify a single record value longer than 255 characters such as a TXT record for DKIM"
   
 }

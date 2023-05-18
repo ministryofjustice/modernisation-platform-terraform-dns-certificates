@@ -42,3 +42,20 @@ variable "gandi_certificate_needed" {
   type        = bool
 
 }
+variable "ssm_private_key" {
+  description = "cert key from aws parameter store or secrets manager"
+  
+  
+}
+variable "certificate_body" {
+  description = ""
+  type = string
+}
+
+variable "certificate_chain" {
+  description = "Path to the certificate chain file"
+}
+
+variable "private_key" {
+  description = "Path to the private key file"
+}

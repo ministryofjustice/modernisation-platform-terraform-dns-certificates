@@ -1,11 +1,13 @@
-// package main
+package main
 
-// import (
-// 	"github.com/gruntwork-io/terratest/modules/terraform"
-// 	"github.com/stretchr/testify/assert"
-// 	"regexp"
-// 	"testing"
-// )
+import (
+	"testing"
+
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/gruntwork-io/terratest/modules/random"
+	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
+)
 
 // func TestModule(t *testing.T) {
 // 	t.Parallel()
@@ -57,10 +59,10 @@ func TestCreateRoute53Record(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 		Vars: map[string]interface{}{
-			"record_name":   recordName,
-			"zone_id":       zoneID,
-			"record_type":   recordType,
-			"record_value":  recordValue,
+			"record_name":  recordName,
+			"zone_id":      zoneID,
+			"record_type":  recordType,
+			"record_value": recordValue,
 		},
 	}
 

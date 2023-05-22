@@ -1,6 +1,6 @@
 
 module "dns_mod" {
-  source                   = "../../"
+  source = "../../"
   #zone                 = "modernisation-platform.service.justice.gov.uk"
   # dns_name                 = local.application_name
   # record_type                     = "A"

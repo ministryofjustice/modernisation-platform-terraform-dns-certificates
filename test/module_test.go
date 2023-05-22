@@ -9,33 +9,33 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
- func TestModule(t *testing.T) {
- 	t.Parallel()
+func TestModule(t *testing.T) {
+	t.Parallel()
 
- 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
- 		TerraformDir: "./unit-test",
- 	})
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "./unit-test",
+	})
 
- 	defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 
- 	terraform.InitAndApply(t, terraformOptions)
+	terraform.InitAndApply(t, terraformOptions)
 
- 	exampleName := terraform.Output(t, terraformOptions, "example_name")
+	exampleName := terraform.Output(t, terraformOptions, "example_name")
 
- 	assert.Regexp(t, regexp.MustCompile(`^example-name*`), exampleName)
- }
+	assert.Regexp(t, regexp.MustCompile(`^example-name*`), exampleName)
+}
 
- package test
+//  package test
 
- import (
- 	"testing"
+//  import (
+//  	"testing"
 
- 	"github.com/aws/aws-sdk-go/aws/session"
- 	"github.com/gruntwork-io/terratest/modules/aws"
- 	"github.com/gruntwork-io/terratest/modules/random"
- 	"github.com/gruntwork-io/terratest/modules/terraform"
- 	"github.com/stretchr/testify/assert"
- )
+//  	"github.com/aws/aws-sdk-go/aws/session"
+//  	"github.com/gruntwork-io/terratest/modules/aws"
+//  	"github.com/gruntwork-io/terratest/modules/random"
+//  	"github.com/gruntwork-io/terratest/modules/terraform"
+//  	"github.com/stretchr/testify/assert"
+//  )
 
 // func TestCreateRoute53Record(t *testing.T) {
 // 	t.Parallel()

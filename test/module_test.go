@@ -1,12 +1,10 @@
 package main
 
 import (
-	"testing"
-
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
+	"regexp"
+	"testing"
 )
 
 func TestModule(t *testing.T) {

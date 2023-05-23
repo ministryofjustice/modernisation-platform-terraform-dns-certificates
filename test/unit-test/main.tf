@@ -21,10 +21,20 @@ locals {
     }
   }
 }
-
+provider "aws" {
+  alias = "test"
+  region = "eu-west-2"
+  assume_role {
+    role_arn = "arn:aws:iam::${local.environment_management.account_ids["core-network-services-production"]}:role/modify-dns-records"
+  }
+  
+}
 
 module "dns_mod" {
   source                   = "../../"
+  providers = {
+    aws.core-vpc = aws.core-vpc # core-vpc-(environment) holds the networking for all accounts
+  }
   application_name         = local.application_name
   zone                     = data.aws_route53_zone.network-services.zone_id
   dns_name                 = local.application_name

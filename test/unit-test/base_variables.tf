@@ -18,3 +18,4 @@ variable "security_group_ingress_protocol" {
   type    = string
   default = "TCP"
 }
+

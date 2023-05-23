@@ -1,3 +1,4 @@
+
 resource "aws_route53_record" "www-dev" {
   zone_id = var.zone
   name    = var.dns_name

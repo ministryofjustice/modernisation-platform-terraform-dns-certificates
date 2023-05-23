@@ -53,7 +53,7 @@ resource "aws_alb" "testalb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb.id]
-  subnets            = []
+  subnets            = [data.aws_subnet.private_subnets_a.id, data.aws_subnet.private_subnets_b.id, data.aws_subnet.private_subnets_c.id]
 
   tags = merge(
     local.tags,

@@ -44,12 +44,12 @@ variable "gandi_certificate_needed" {
 }
 variable "ssm_private_key" {
   description = "cert key from aws parameter store or secrets manager"
-  
-  
+
+
 }
 variable "certificate_body" {
   description = ""
-  type = string
+  type        = string
 }
 
 variable "certificate_chain" {
@@ -61,9 +61,9 @@ variable "private_key" {
 }
 variable "alias_zone" {
   type = string
-  
+
 }
 variable "alias_dns_name" {
   type = string
-  
+
 }

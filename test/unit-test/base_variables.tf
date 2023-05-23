@@ -4,17 +4,17 @@ variable "networking" {
 
 }
 variable "security_group_ingress_from_port" {
-  type = string
+  type    = string
   default = "443"
-  
+
 }
 
 variable "security_group_ingress_to_port" {
-  type = string
+  type    = string
   default = "443"
-  
+
 }
 variable "security_group_ingress_protocol" {
-  type = string
+  type    = string
   default = "TCP"
 }

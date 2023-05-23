@@ -10,7 +10,7 @@ data "http" "environments_file" {
 locals {
 
   application_name = "testing"
-  app_name = "test"
+  app_name         = "test"
 
   environment_management = jsondecode(data.aws_secretsmanager_secret_version.environment_management.secret_string)
 

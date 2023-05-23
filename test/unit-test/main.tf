@@ -2,10 +2,10 @@ locals {
 
   loadbalancer_ingress_rules = {
     "lb_ingress" = {
-      description     = "Loadbalancer ingress rule from CloudFront"
-      from_port       = var.security_group_ingress_from_port
-      to_port         = var.security_group_ingress_to_port
-      protocol        = var.security_group_ingress_protocol
+      description = "Loadbalancer ingress rule from CloudFront"
+      from_port   = var.security_group_ingress_from_port
+      to_port     = var.security_group_ingress_to_port
+      protocol    = var.security_group_ingress_protocol
       # cidr_blocks     = ["0.0.0.0/0"]
     }
   }
@@ -25,20 +25,20 @@ locals {
 
 module "dns_mod" {
   source                   = "../../"
-  application_name  = local.application_name
-  zone                 = data.aws_route53_zone.network-services.zone_id
+  application_name         = local.application_name
+  zone                     = data.aws_route53_zone.network-services.zone_id
   dns_name                 = local.application_name
-  record_type                     = "A"
-  alias_zone =  aws_alb.testalb.zone_id
-  alias_dns_name = aws_alb.testalb.dns_name
+  record_type              = "A"
+  alias_zone               = aws_alb.testalb.zone_id
+  alias_dns_name           = aws_alb.testalb.dns_name
   gandi_certificate_needed = false
-  acm_certificate_needed  = false
-  set_identifier=""
-  certificate_body = ""
-  certificate_chain = ""
-  record = ""
-  ssm_private_key = ""
-  private_key = ""
+  acm_certificate_needed   = false
+  set_identifier           = ""
+  certificate_body         = ""
+  certificate_chain        = ""
+  record                   = ""
+  ssm_private_key          = ""
+  private_key              = ""
   tags = merge(
     local.tags,
     {
@@ -49,11 +49,11 @@ module "dns_mod" {
 }
 
 resource "aws_alb" "testalb" {
-  name = "alb-test"
-  internal = false
+  name               = "alb-test"
+  internal           = false
   load_balancer_type = "application"
-  security_groups = [ aws_security_group.lb.id ]
-  subnets = [  ]
+  security_groups    = [aws_security_group.lb.id]
+  subnets            = []
 
   tags = merge(
     local.tags,

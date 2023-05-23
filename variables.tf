@@ -59,3 +59,11 @@ variable "certificate_chain" {
 variable "private_key" {
   description = "Path to the private key file"
 }
+variable "alias_zone" {
+  type = string
+  
+}
+variable "alias_dns_name" {
+  type = string
+  
+}

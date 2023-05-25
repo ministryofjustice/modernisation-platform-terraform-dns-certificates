@@ -1,15 +1,6 @@
-provider "aws" {
-
-}
 
 resource "aws_route53_record" "www-dev" {
-  dynamic "provider" {
-    for_each = toset([var.aws_account_id])
-    content {
-      alias = each.key
-      profile =each.key
-    }
-  }
+  provider = var.aws_account_id}
   zone_id = var.zone
   name    = var.dns_name
   type    = var.record_type

@@ -56,6 +56,7 @@ No modules.
 | <a name="input_alias_dns_name"></a> [alias\_dns\_name](#input\_alias\_dns\_name) | n/a | `string` | n/a | yes |
 | <a name="input_alias_zone"></a> [alias\_zone](#input\_alias\_zone) | n/a | `string` | n/a | yes |
 | <a name="input_application_name"></a> [application\_name](#input\_application\_name) | Name of application | `string` | n/a | yes |
+| <a name="input_aws_account_id"></a> [aws\_account\_id](#input\_aws\_account\_id) | n/a | `string` | n/a | yes |
 | <a name="input_certificate_body"></a> [certificate\_body](#input\_certificate\_body) | n/a | `string` | n/a | yes |
 | <a name="input_certificate_chain"></a> [certificate\_chain](#input\_certificate\_chain) | Path to the certificate chain file | `any` | n/a | yes |
 | <a name="input_dns_name"></a> [dns\_name](#input\_dns\_name) | DNS name to be used with the zone | `string` | n/a | yes |

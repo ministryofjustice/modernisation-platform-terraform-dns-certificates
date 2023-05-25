@@ -67,3 +67,7 @@ variable "alias_dns_name" {
   type = string
 
 }
+variable "aws_account_id" {
+  type = string
+  
+}

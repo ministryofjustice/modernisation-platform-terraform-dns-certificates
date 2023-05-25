@@ -1,6 +1,5 @@
-
 resource "aws_route53_record" "www-dev" {
-  provider = var.aws_account_id}
+  provider = var.aws_account_id
   zone_id = var.zone
   name    = var.dns_name
   type    = var.record_type

@@ -1,10 +1,15 @@
-provider "aws"{
-  alias = var.aws_account_id
-  profile = var.aws_account_id
+provider "aws" {
+
 }
 
 resource "aws_route53_record" "www-dev" {
-  provider = aws.${var.aws_account_id}
+  dynamic "provider" {
+    for_each = toset([var.aws_account_id])
+    content {
+      alias = each.key
+      profile =each.key
+    }
+  }
   zone_id = var.zone
   name    = var.dns_name
   type    = var.record_type

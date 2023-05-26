@@ -1,9 +1,12 @@
 provider "aws" {
-
+  alias = "core-vpc"
+  assume_role {
+    role_arn = var.aws_account_id
+  }
 }
 
 resource "aws_route53_record" "www-dev" {
-  provider = aws.${var.aws_account_id}
+  provider = aws.core-vpc
   zone_id = var.zone
   name    = var.dns_name
   type    = var.record_type

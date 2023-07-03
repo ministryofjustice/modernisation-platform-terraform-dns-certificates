@@ -4,13 +4,13 @@ on:
   pull_request:
     branches:
       - main
+  merge-queue:
 
 permissions:
   contents: read
 
 
-jobs:
-  merge-queue:
+jobs:  
   docs:
     permissions:
       pull-requests: write

@@ -36,7 +36,7 @@ If you're looking to raise an issue with this module, please create a new issue 
 
 | Name | Version |
 |------|---------|
-| <a name="provider_var.aws_account_id"></a> [var.aws\_account\_id](#provider\_var.aws\_account\_id) | n/a |
+| <a name="provider_aws.core-vpc"></a> [aws.core-vpc](#provider\_aws.core-vpc) | ~> 4.0 |
 
 ## Modules
 
@@ -46,7 +46,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [var_aws_route53_record.www-dev](https://registry.terraform.io/providers/hashicorp/var/latest/docs/resources/aws_route53_record) | resource |
+| [aws_route53_record.www-dev](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 
 ## Inputs
 

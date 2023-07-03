@@ -1,6 +1,6 @@
 name: Generate Terraform README docs
 on:
-  merge-queue:
+  merge-group:
     pull_request:
       branches:
         - main

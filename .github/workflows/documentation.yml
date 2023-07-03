@@ -1,10 +1,10 @@
 name: Generate Terraform README docs
 on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - main
   merge-queue:
+    pull_request:
+      branches:
+        - main
+  
 
 permissions:
   contents: read

@@ -1,9 +1,9 @@
 name: Generate Terraform README docs
 on:
+  pull_request:
+    branches: [ main ]
   merge-group:
-    pull_request:
-      branches:
-        - main
+    branches: [ main ]
   
 
 permissions:

@@ -36,7 +36,7 @@ If you're looking to raise an issue with this module, please create a new issue 
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws.core-vpc"></a> [aws.core-vpc](#provider\_aws.core-vpc) | ~> 4.0 |
+| <a name="provider_aws.core-vpc"></a> [aws.core-vpc](#provider\_aws.core-vpc) | ~> 5.0 |
 
 ## Modules
 

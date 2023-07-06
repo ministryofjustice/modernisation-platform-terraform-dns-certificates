@@ -8,12 +8,13 @@ on:
     paths:
       - '**.tf'
       - '.github/workflows/terraform-static-analysis.yml'
+  merge_group:
+    branches: [ main ]
 
 permissions:
   contents: read
 
 jobs:
-  merge_queue:
   terraform-static-analysis:
     permissions:
       pull-requests: write

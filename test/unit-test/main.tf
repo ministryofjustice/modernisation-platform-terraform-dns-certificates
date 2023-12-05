@@ -60,9 +60,9 @@ module "dns_mod" {
 
 resource "aws_alb" "testalb" {
 # A number of tests to ignore to stop errors in the overnight check
-#checkov:skip=CKV_AWS_150 "Ensure that Load Balancer has deletion protection enabled - Not applicable in the test"
-#checkov:skip=CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled - not appropriate in the test"
-#checkov:skip=CKV2_AWS_28: "Ensure public facing ALB are protected by WAF - not required in the test"
+# checkov:skip=CKV_AWS_150 "Ensure that Load Balancer has deletion protection enabled - Not applicable in the test"
+# checkov:skip=CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled - not appropriate in the test"
+# checkov:skip=CKV2_AWS_28: "Ensure public facing ALB are protected by WAF - not required in the test"
   name               = "alb-test"
   internal           = false
   load_balancer_type = "application"

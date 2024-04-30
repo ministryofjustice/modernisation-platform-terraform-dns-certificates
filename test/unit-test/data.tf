@@ -124,3 +124,13 @@ data "aws_route53_zone" "network-services" {
   name         = "modernisation-platform.service.justice.gov.uk."
   private_zone = false
 }
+
+data "aws_ami" "example" {
+  most_recent = true
+
+  owners = ["self"]
+  tags = {
+    Name   = "app-server"
+    Tested = "true"
+  }
+}

@@ -1,87 +1,99 @@
-package main
+package test
 
 import (
-	"github.com/gruntwork-io/terratest/modules/terraform"
-	//"github.com/stretchr/testify/assert"
-	//"regexp"
+	"strings"
 	"testing"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/route53"
+	"github.com/aws/aws-sdk-go/service/sts"
+	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
 )
 
-func TestModule(t *testing.T) {
+func TestCertificateCreation(t *testing.T) {
 	t.Parallel()
 
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "./unit-test",
-	})
+	fqdn := "platforms-test.modernisation-platform.service.justice.gov.uk"
+	recordType := "CNAME"
+	terraformDir := "./unit-test"
+
+	terraformOptions := &terraform.Options{
+		TerraformDir: terraformDir,
+		Vars: map[string]interface{}{
+			"fqdn":        fqdn,
+			"record_type": recordType,
+		},
+	}
 
 	defer terraform.Destroy(t, terraformOptions)
-
 	terraform.InitAndApply(t, terraformOptions)
 
-	//zoneID := terraform.Output(t, terraformOptions, "zone_id")
+	awsSession, err := session.NewSessionWithOptions(session.Options{
+		SharedConfigState: session.SharedConfigEnable,
+	})
+	assert.NoError(t, err)
 
-	//assert.Regexp(t, regexp.MustCompile(`^example-name*`), zoneID)
+	// Get the AWS account ID
+	stsClient := sts.New(awsSession)
+	callerIdentity, err := stsClient.GetCallerIdentity(&sts.GetCallerIdentityInput{})
+	assert.NoError(t, err)
+	accountID := *callerIdentity.Account
+
+	// Find the hosted zone ID for the given domain
+	zoneID, err := getHostedZoneID(awsSession, accountID, fqdn)
+	assert.NoError(t, err)
+
+	// Retrieve the CNAME record created by Terraform
+	record, err := getRoute53RecordSet(awsSession, zoneID, fqdn, recordType)
+	assert.NoError(t, err)
+
+	assert.NotNil(t, record)
+	assert.Equal(t, fqdn, *record.Name)
+	assert.Equal(t, recordType, *record.Type)
+
+	// Assert the record value (CNAME target) matches the expected value
+	expectedRecordValue := "_abc123.acm-validations.aws."
+	assert.Equal(t, expectedRecordValue, *record.ResourceRecords[0].Value)
 }
 
-//  package test
+func getHostedZoneID(awsSession *session.Session, accountID, fqdn string) (string, error) {
+	route53Client := route53.New(awsSession)
 
-//  import (
-//  	"testing"
+	hostedZones, err := route53Client.ListHostedZonesByName(&route53.ListHostedZonesByNameInput{
+		DNSName: aws.String(fqdn),
+	})
+	if err != nil {
+		return "", err
+	}
 
-//  	"github.com/aws/aws-sdk-go/aws/session"
-//  	"github.com/gruntwork-io/terratest/modules/aws"
-//  	"github.com/gruntwork-io/terratest/modules/random"
-//  	"github.com/gruntwork-io/terratest/modules/terraform"
-//  	"github.com/stretchr/testify/assert"
-//  )
+	for _, hostedZone := range hostedZones.HostedZones {
+		if strings.HasSuffix(*hostedZone.Name, fqdn+".") &&
+			*hostedZone.Config.PrivateZone == false &&
+			*hostedZone.Id != "/hostedzone/"+accountID {
+			return strings.TrimPrefix(*hostedZone.Id, "/hostedzone/"), nil
+		}
+	}
 
-// func TestCreateRoute53Record(t *testing.T) {
-// 	t.Parallel()
+	return "", nil
+}
 
-// 	// Generate a random name for the Route53 record
-// 	recordName := "example.com" + random.UniqueId()
+func getRoute53RecordSet(awsSession *session.Session, zoneID, fqdn, recordType string) (*route53.ResourceRecordSet, error) {
+	route53Client := route53.New(awsSession)
 
-// 	// Specify the Route53 zone ID for which the record needs to be created
-// 	zoneID := "YOUR_ROUTE53_ZONE_ID"
+	recordSet, err := route53Client.ListResourceRecordSets(&route53.ListResourceRecordSetsInput{
+		HostedZoneId:    aws.String(zoneID),
+		StartRecordName: aws.String(fqdn),
+		StartRecordType: aws.String(recordType),
+	})
+	if err != nil {
+		return nil, err
+	}
 
-// 	// Specify the record type, such as A, CNAME, etc.
-// 	recordType := "A"
+	if len(recordSet.ResourceRecordSets) > 0 {
+		return recordSet.ResourceRecordSets[0], nil
+	}
 
-// 	// Specify the record value
-// 	recordValue := "10.0.0.1"
-
-// 	// Specify the Terraform directory containing the Route53 resource definition
-// 	terraformDir := "./unit-test"
-
-// 	// Configure Terraform options with the environment variables
-// 	terraformOptions := &terraform.Options{
-// 		TerraformDir: terraformDir,
-// 		Vars: map[string]interface{}{
-// 			"record_name":  recordName,
-// 			"zone_id":      zoneID,
-// 			"record_type":  recordType,
-// 			"record_value": recordValue,
-// 		},
-// 	}
-
-// 	// Ensure Terraform resources are destroyed at the end of the test
-// 	defer terraform.Destroy(t, terraformOptions)
-
-// 	// Deploy the Terraform resources
-// 	terraform.InitAndApply(t, terraformOptions)
-
-// 	// Get the AWS session
-// 	awsSession := session.Must(session.NewSessionWithOptions(session.Options{
-// 		SharedConfigState: session.SharedConfigEnable,
-// 	}))
-
-// 	// Get the Route53 record
-// 	record, err := aws.GetRoute53RecordSetE(t, awsSession, zoneID, recordName, recordType)
-// 	assert.NoError(t, err)
-
-// 	// Assert that the record exists
-// 	assert.NotNil(t, record)
-// 	assert.Equal(t, recordName, record.Name)
-// 	assert.Equal(t, recordType, record.Type)
-// 	assert.Equal(t, recordValue, record.Value)
-// }
+	return nil, nil
+}

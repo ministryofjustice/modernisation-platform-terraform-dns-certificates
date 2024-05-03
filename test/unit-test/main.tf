@@ -9,7 +9,7 @@
 module "cert_module" {
   source = "../../"
   providers = {
-    aws.core-network-services = aws.core-network-services
+    aws.core-vpc = aws.core-vpc
 
   }
   aws_account_id = local.environment_management.account_ids

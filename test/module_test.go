@@ -15,7 +15,7 @@ import (
 func TestCertificateCreation(t *testing.T) {
 	t.Parallel()
 
-	fqdn := "platforms-test.modernisation-platform.service.justice.gov.uk"
+	fqdn := "modernisation-platform.service.justice.gov.uk"
 	recordType := "CNAME"
 	terraformDir := "./unit-test"
 

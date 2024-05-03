@@ -13,12 +13,12 @@ module "cert_module" {
 
   }
   aws_account_id = local.environment_management.account_ids
-  record_type = "CNAME"
-  fqdn        = "platforms-test.modernisation-platform.service.justice.gov.uk"
-  app_name = local.application_name
+  record_type    = "CNAME"
+  fqdn           = "platforms-test.modernisation-platform.service.justice.gov.uk"
+  app_name       = local.application_name
   #environment_management = local.environment_management
   provider_name = local.provider_name
 
   tags = local.tags
- 
+
 }

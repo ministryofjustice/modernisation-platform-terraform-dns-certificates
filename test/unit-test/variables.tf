@@ -9,6 +9,6 @@ variable "record_type" {
 }
 
 variable "environment" {
-    type = string
-  
+  type = string
+
 }

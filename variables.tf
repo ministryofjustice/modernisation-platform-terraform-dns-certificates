@@ -22,19 +22,19 @@ variable "aws_account_id" {
 }
 
 variable "app_name" {
-  type = string
+  type        = string
   description = "application name"
-  
+
 }
 
 # variable "environment_management" {
 #   type = map
 #   description = "environment name"
-  
+
 # }
 
 variable "provider_name" {
-  type = string
+  type        = string
   description = "vpc provider name"
-  
+
 }

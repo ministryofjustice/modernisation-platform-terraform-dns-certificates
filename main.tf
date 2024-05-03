@@ -19,19 +19,19 @@ resource "aws_acm_certificate" "certificate" {
 
 
 resource "aws_route53_record" "cert_validation" {
-  provider = aws.core-vpc
-  depends_on = [ aws_acm_certificate.certificate ]
+  provider   = aws.core-vpc
+  depends_on = [aws_acm_certificate.certificate]
   for_each = {
     for val in aws_acm_certificate.certificate.domain_validation_options : val.domain_name => {
-      name  = val.resource_record_name
-      record  = val.resource_record_value
-      type    = val.resource_record_type
-    } 
+      name   = val.resource_record_name
+      record = val.resource_record_value
+      type   = val.resource_record_type
+    }
   }
-  zone_id  = var.fqdn
-  name     = each.value.name
+  zone_id = var.fqdn
+  name    = each.value.name
   records = [each.value.record]
-  type     = var.record_type
+  type    = var.record_type
 }
 
 

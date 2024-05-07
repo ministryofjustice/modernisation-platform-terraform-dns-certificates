@@ -1,12 +1,3 @@
-# provider "aws" {
-#   alias  = "core-vpc"
-#   region = "eu-west-2"
-#   assume_role {
-#     role_arn = "arn:aws:iam::${var.environment_management.account_ids[var.provider_name]}:role/member-delegation-${local.vpc_name}-${var.app_name}"
-#   }
-# }
-
-
 resource "aws_acm_certificate" "certificate" {
   domain_name       = var.fqdn
   validation_method = "DNS"
@@ -15,6 +6,11 @@ resource "aws_acm_certificate" "certificate" {
   lifecycle {
     create_before_destroy = true
   }
+}
+data "aws_route53_zone" "zone" {
+  provider = aws.core-vpc
+  name         = var.fqdn
+  private_zone = false
 }
 
 
@@ -37,5 +33,5 @@ resource "aws_route53_record" "cert_validation" {
 
 resource "aws_acm_certificate_validation" "example" {
   certificate_arn         = aws_acm_certificate.certificate.arn
-  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.cert_dns_validation_record : record.fqdn]
 }

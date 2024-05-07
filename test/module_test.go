@@ -18,10 +18,12 @@ func TestCertificateCreation(t *testing.T) {
 	fqdn := "modernisation-platform.service.justice.gov.uk"
 	recordType := "CNAME"
 	terraformDir := "./unit-test"
+	environment := "test"
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 		Vars: map[string]interface{}{
+			"environment": environment,
 			"fqdn":        fqdn,
 			"record_type": recordType,
 		},

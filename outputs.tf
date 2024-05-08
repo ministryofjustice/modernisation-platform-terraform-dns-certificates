@@ -1,4 +1,4 @@
 output "cert_record" {
-    value = aws_acm_certificate.certificate.domain_name
-  
+  value = aws_acm_certificate.certificate.domain_name
+
 }

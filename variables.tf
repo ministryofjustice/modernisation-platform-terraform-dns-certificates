@@ -28,10 +28,10 @@ variable "app_name" {
 }
 
 variable "is-production" {
-  type = bool
+  type        = bool
   description = "is this for production or non production"
 
-} 
+}
 
 variable "provider_name" {
   type        = string

@@ -43,6 +43,9 @@ func TestCertificateCreation(t *testing.T) {
 	assert.NoError(t, err)
 	accountID := *callerIdentity.Account
 
+	// Get certificate information
+	// GetAcmCertificateArnE(t testing.TestingT, awsRegion string, certDomainName string) (string, error)
+
 	// Find the hosted zone ID for the given domain
 	zoneID, err := getHostedZoneID(awsSession, accountID, fqdn)
 	assert.NoError(t, err)

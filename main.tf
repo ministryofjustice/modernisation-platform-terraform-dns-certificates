@@ -13,8 +13,9 @@ data "aws_route53_zone" "zone" {
   private_zone = false
 }
 
-resource "aws_route53_record" "cert_dns_validation_record" {
-  provider = aws.core-vpc
+resource "aws_route53_record" "dns_validation_record_production" {
+  provider = aws.core-network-services
+  count = var.is-production ? 1 : 0
   depends_on = [ aws_acm_certificate.certificate ]
   for_each = {
     for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
@@ -30,7 +31,24 @@ resource "aws_route53_record" "cert_dns_validation_record" {
   ttl     = 300
 
 }
+resource "aws_route53_record" "dns_validation_record_nonproduction" {
+  provider = aws.core-vpc
+  count = var.is-production ? 0 : 1
+  depends_on = [ aws_acm_certificate.certificate ]
+  for_each = {
+    for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
+      name  = dvo.resource_record_name
+      record  = dvo.resource_record_value
+      type    = dvo.resource_record_type
+    } 
+  }
+  zone_id  = data.aws_route53_zone.zone.zone_id
+  name     = each.value.name
+  records = [each.value.record]
+  type     = var.record_type
+  ttl     = 300
 
+}
 
 resource "aws_acm_certificate_validation" "example" {
   certificate_arn         = aws_acm_certificate.certificate.arn

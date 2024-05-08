@@ -27,11 +27,11 @@ variable "app_name" {
 
 }
 
-# variable "environment_management" {
-#   type = map
-#   description = "environment name"
+variable "is-production" {
+  type = bool
+  description = "is this for production or non production"
 
-# }
+} 
 
 variable "provider_name" {
   type        = string

@@ -37,6 +37,7 @@ If you're looking to raise an issue with this module, please create a new issue 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+| <a name="provider_aws.core-network-services"></a> [aws.core-network-services](#provider\_aws.core-network-services) | ~> 5.0 |
 | <a name="provider_aws.core-vpc"></a> [aws.core-vpc](#provider\_aws.core-vpc) | ~> 5.0 |
 
 ## Modules
@@ -49,7 +50,8 @@ No modules.
 |------|------|
 | [aws_acm_certificate.certificate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate) | resource |
 | [aws_acm_certificate_validation.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate_validation) | resource |
-| [aws_route53_record.cert_dns_validation_record](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
+| [aws_route53_record.dns_validation_record_nonproduction](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
+| [aws_route53_record.dns_validation_record_production](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_zone.zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
@@ -59,11 +61,14 @@ No modules.
 | <a name="input_app_name"></a> [app\_name](#input\_app\_name) | application name | `string` | n/a | yes |
 | <a name="input_aws_account_id"></a> [aws\_account\_id](#input\_aws\_account\_id) | n/a | `any` | n/a | yes |
 | <a name="input_fqdn"></a> [fqdn](#input\_fqdn) | DNS name to be used with the zone | `string` | n/a | yes |
+| <a name="input_is-production"></a> [is-production](#input\_is-production) | is this for production or non production | `bool` | n/a | yes |
 | <a name="input_provider_name"></a> [provider\_name](#input\_provider\_name) | vpc provider name | `string` | n/a | yes |
 | <a name="input_record_type"></a> [record\_type](#input\_record\_type) | type of record to create | `string` | `"CNAME"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Common tags to be used by all resources | `map(string)` | n/a | yes |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_cert_record"></a> [cert\_record](#output\_cert\_record) | n/a |
 <!-- END_TF_DOCS -->

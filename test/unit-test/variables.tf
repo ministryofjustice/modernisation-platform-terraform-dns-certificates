@@ -7,6 +7,11 @@ variable "record_type" {
   description = "The type of DNS record to create (e.g., CNAME, A, etc.)"
   type        = string
 }
+variable "is-production" {
+    type = bool
+    default = false
+  
+}
 
 variable "environment" {
   type = string

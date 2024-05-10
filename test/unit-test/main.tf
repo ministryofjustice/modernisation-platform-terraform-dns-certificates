@@ -10,6 +10,7 @@ module "cert_module" {
   source = "../../"
   providers = {
     aws.core-vpc = aws.core-vpc
+    aws.core-network-services = aws.core-network-services
 
   }
   aws_account_id = local.environment_management.account_ids
@@ -18,7 +19,7 @@ module "cert_module" {
   app_name       = local.application_name
   #environment_management = local.environment_management
   provider_name = local.provider_name
-
+  is-production = "false"
   tags = local.tags
 
 }

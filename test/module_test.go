@@ -19,13 +19,15 @@ func TestCertificateCreation(t *testing.T) {
 	recordType := "CNAME"
 	terraformDir := "./unit-test"
 	environment := "test"
+	production := "true"
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 		Vars: map[string]interface{}{
-			"environment": environment,
-			"fqdn":        fqdn,
-			"record_type": recordType,
+			"environment":   environment,
+			"fqdn":          fqdn,
+			"record_type":   recordType,
+			"is-production": production,
 		},
 	}
 

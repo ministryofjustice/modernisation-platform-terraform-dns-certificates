@@ -60,12 +60,12 @@ resource "aws_route53_record" "dns_validation_record_core_network_services" {
 }
 
 resource "aws_acm_certificate_validation" "prod" {
-  count = var.is-production ? 1 : 0
+  count                   = var.is-production ? 1 : 0
   certificate_arn         = aws_acm_certificate.certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.dns_validation_record_core_network_services : record.fqdn]
 }
 resource "aws_acm_certificate_validation" "non_prod" {
-  count = var.is-production ? 0 : 1
+  count                   = var.is-production ? 0 : 1
   certificate_arn         = aws_acm_certificate.certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.dns_validation_record_core_vpc : record.fqdn]
 }

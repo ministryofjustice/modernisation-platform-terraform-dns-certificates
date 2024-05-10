@@ -9,7 +9,7 @@
 module "cert_module" {
   source = "../../"
   providers = {
-    aws.core-vpc = aws.core-vpc
+    aws.core-vpc              = aws.core-vpc
     aws.core-network-services = aws.core-network-services
 
   }
@@ -20,6 +20,6 @@ module "cert_module" {
   #environment_management = local.environment_management
   provider_name = local.provider_name
   is-production = "false"
-  tags = local.tags
+  tags          = local.tags
 
 }

@@ -8,9 +8,9 @@ variable "record_type" {
   type        = string
 }
 variable "is-production" {
-    type = bool
-    default = false
-  
+  type    = bool
+  default = false
+
 }
 
 variable "environment" {

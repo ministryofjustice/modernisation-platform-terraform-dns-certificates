@@ -2,8 +2,6 @@ module github.com/ministryofjustice/modernisation-platform-terraform-dns-certifi
 
 go 1.21
 
-toolchain go1.22.1
-
 require github.com/gruntwork-io/terratest v0.46.14
 
 require (

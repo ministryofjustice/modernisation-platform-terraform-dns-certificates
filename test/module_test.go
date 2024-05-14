@@ -9,16 +9,16 @@ import (
 func TestCertificateCreation(t *testing.T) {
 	t.Parallel()
 
-	fqdn := "modernisation-platform.service.justice.gov.uk"
+	fqdn := "platforms-test.modernisation-platform.service.justice.gov.uk"
 	recordType := "CNAME"
 	terraformDir := "./unit-test"
-	environment := "test"
-	production := "true"
+	// environment := "test"
+	production := "false"
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 		Vars: map[string]interface{}{
-			"environment":   environment,
+			// "environment":   environment,
 			"fqdn":          fqdn,
 			"record_type":   recordType,
 			"is-production": production,

@@ -13,7 +13,7 @@ variable "is-production" {
 
 }
 
-variable "environment" {
-  type = string
+# variable "environment" {
+#   type = string
 
-}
+# }

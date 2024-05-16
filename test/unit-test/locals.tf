@@ -10,7 +10,7 @@ data "http" "environments_file" {
 locals {
 
   application_name = "testing"
-  app_name         = "test"
+  app_name = "test"
 
   environment_management = jsondecode(data.aws_secretsmanager_secret_version.environment_management.secret_string)
 
@@ -29,11 +29,12 @@ locals {
     { "source-code" = "https://github.com/ministryofjustice/modernisation-platform" }
   )
 
-  environment = trimprefix(terraform.workspace, "${var.networking[0].application}-")
+  #environment = trimprefix(terraform.workspace, "${var.networking[0].application}-")
+  environment = trimprefix("testing-test", "${var.networking[0].application}-")
   vpc_name    = var.networking[0].business-unit
   subnet_set  = var.networking[0].set
 
   is_live       = [substr(terraform.workspace, length(local.application_name), length(terraform.workspace)) == "-production" || substr(terraform.workspace, length(local.application_name), length(terraform.workspace)) == "-preproduction" ? "live" : "non-live"]
-  provider_name = "core-vpc-${local.app_name}"
+  provider_name = "core-vpc-${local.environment}"
 
 }

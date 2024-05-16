@@ -1,6 +1,6 @@
 module "cert_module" {
-  source         = "../../"
-  providers      = {
+  source = "../../"
+  providers = {
     aws.core-network-services = aws.core-network-services
   }
   aws_account_id = local.environment_management.account_ids

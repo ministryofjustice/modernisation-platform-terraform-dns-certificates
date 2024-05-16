@@ -1,5 +1,5 @@
 module "cert_module" {
-  source = "../../"
+  source         = "../../"
   aws_account_id = local.environment_management.account_ids
   record_type    = "CNAME"
   fqdn           = "platforms-test.modernisation-platform.service.justice.gov.uk"

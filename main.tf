@@ -1,3 +1,10 @@
+provider "aws" {
+  alias = "core-vpc"
+  assume_role {
+    role_arn = var.aws_account_id
+  }
+}
+
 resource "aws_acm_certificate" "certificate" {
   domain_name       = var.fqdn
   validation_method = "DNS"

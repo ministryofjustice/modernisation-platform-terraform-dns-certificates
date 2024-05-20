@@ -61,7 +61,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_app_name"></a> [app\_name](#input\_app\_name) | application name | `string` | n/a | yes |
-| <a name="input_aws_account_id"></a> [aws\_account\_id](#input\_aws\_account\_id) | n/a | `number` | n/a | yes |
+| <a name="input_aws_account_id"></a> [aws\_account\_id](#input\_aws\_account\_id) | n/a | `map` | n/a | yes |
 | <a name="input_fqdn"></a> [fqdn](#input\_fqdn) | DNS name to be used with the zone | `string` | n/a | yes |
 | <a name="input_is-production"></a> [is-production](#input\_is-production) | is this for production or non production | `bool` | n/a | yes |
 | <a name="input_provider_name"></a> [provider\_name](#input\_provider\_name) | vpc provider name | `string` | n/a | yes |

@@ -17,7 +17,7 @@ variable "record_type" {
 }
 
 variable "aws_account_id" {
-  type = string
+  type = number
 
 }
 

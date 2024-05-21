@@ -44,7 +44,7 @@ resource "aws_route53_record" "dns_validation_record_core_vpc" {
   zone_id = var.is-production ? null : data.aws_route53_zone.zone_core_vpc[0].zone_id
   name    = each.value.name
   records = [each.value.record]
-  
+
 }
 
 resource "aws_route53_record" "dns_validation_record_core_network_services" {
@@ -58,7 +58,7 @@ resource "aws_route53_record" "dns_validation_record_core_network_services" {
   zone_id = var.is-production ? data.aws_route53_zone.core_network_zone[0].zone_id : null
   name    = each.value.name
   records = [each.value.record]
-  
+
 }
 
 resource "aws_acm_certificate_validation" "prod" {

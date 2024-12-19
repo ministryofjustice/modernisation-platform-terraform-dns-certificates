@@ -2,7 +2,7 @@ module github.com/ministryofjustice/modernisation-platform-terraform-dns-certifi
 
 go 1.22
 
-require github.com/gruntwork-io/terratest v0.48.0
+require github.com/gruntwork-io/terratest v0.48.1
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect

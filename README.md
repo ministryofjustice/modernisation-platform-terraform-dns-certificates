@@ -1,6 +1,6 @@
 # Modernisation Platform Certification Module
 
-[![repo standards badge](https://github-community.cloud-platform.service.justice.gov.uk/repository-standards/api/modernisation-platform-terraform-dns-certificates/badge)](https://github-community.cloud-platform.service.justice.gov.uk/repository-standards/modernisation-platform-terraform-dns-certificates)
+[![repo standards badge](https://github-community.service.justice.gov.uk/repository-standards/api/modernisation-platform-terraform-dns-certificates/badge)](https://github-community.service.justice.gov.uk/repository-standards/modernisation-platform-terraform-dns-certificates)
 
 ## Usage
 

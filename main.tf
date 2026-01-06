@@ -1,18 +1,6 @@
 
-data "aws_route53_zone" "public_zone_core_vpc" {
-  count = var.is-production ? 0 : 1
-  provider = aws.core-vpc
-  zone_id  = var.zone_id_core_vpc_public
-}
-
-data "aws_route53_zone" "public_zone_core_network_services" {
-  count = var.is-production ? 1 : 0
-  provider = aws.core-network-services
-  zone_id  = var.zone_id_core_network_services_public
-}
-
 locals {
-  fqdn = var.is-production ? trim(data.aws_route53_zone.public_zone_core_network_services[0].name, ".") : trim(data.aws_route53_zone.public_zone_core_vpc[0].name, ".")
+  fqdn = var.is-production ? trim(var.zone_name_core_network_services_public, ".") : trim(var.zone_name_core_vpc_public, ".")
   domain_validation_records = {
     for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name

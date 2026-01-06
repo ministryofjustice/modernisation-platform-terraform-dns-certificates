@@ -7,6 +7,7 @@ variable "application_name" {
 variable "production_service_fqdn" {
   type        = string
   description = "The fully qualified domain name for production deployments"
+  default     = ""
 }
 
 variable "is-production" {
@@ -22,12 +23,12 @@ variable "subject_alternative_names" {
 
 variable "zone_id_core_vpc_public" {
   type        = string
-  description = "Route53 core-vpc public hosted zone ID for certificate validation"
+  description = "Route53 core-vpc public hosted zone ID for certificate validation. Required for non-production deployments"
 }
 
 variable "zone_id_core_network_services_public" {
   type        = string
-  description = "Route53 core-network-services public hosted zone ID for certificate validation"
+  description = "Route53 core-network-services public hosted zone ID for certificate validation. Required for production deployments"
 }
 
 variable "tags" {

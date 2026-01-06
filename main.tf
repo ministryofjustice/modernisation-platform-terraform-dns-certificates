@@ -12,7 +12,7 @@ data "aws_route53_zone" "public_zone_core_network_services" {
 }
 
 locals {
-  fqdn = var.is-production ? var.production_service_fqdn : "${var.application_name}.${trim(data.aws_route53_zone.public_zone_core_vpc[0].name, ".")}"
+  fqdn = var.is-production ? trim(data.aws_route53_zone.public_zone_core_network_services[0].name, ".") : trim(data.aws_route53_zone.public_zone_core_vpc[0].name, ".")
   domain_validation_records = {
     for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
@@ -23,7 +23,10 @@ locals {
 
 resource "aws_acm_certificate" "certificate" {
   domain_name               = local.fqdn
-  subject_alternative_names = concat(["*.${local.fqdn}"], [for prefix in var.subject_alternative_names : "${prefix}.${local.fqdn}"])
+  subject_alternative_names = concat(
+    ["${var.application_name}.${local.fqdn}", "*.${var.application_name}.${local.fqdn}"],
+    [for prefix in var.subject_alternative_names : "${prefix}.${var.application_name}.${local.fqdn}"]
+  )
   validation_method         = "DNS"
   tags                      = var.tags
   lifecycle {

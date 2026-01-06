@@ -1,4 +1,18 @@
 
+data "aws_route53_zone" "public_zone_core_vpc" {
+  count = var.is-production ? 0 : 1
+  provider = aws.core-vpc
+  name     = var.zone_name_core_vpc_public
+  private_zone = false
+}
+
+data "aws_route53_zone" "public_zone_core_network_services" {
+  count = var.is-production ? 1 : 0
+  provider = aws.core-network-services
+  name     = var.zone_name_core_network_services_public
+  private_zone = false
+}
+
 locals {
   fqdn = var.is-production ? trim(var.zone_name_core_network_services_public, ".") : trim(var.zone_name_core_vpc_public, ".")
   domain_validation_records = {
@@ -28,7 +42,7 @@ resource "aws_route53_record" "dns_validation_record_core_vpc" {
   ttl        = 300
   type       = "CNAME"
   for_each = var.is-production ? {} : local.domain_validation_records
-  zone_id = var.zone_id_core_vpc_public
+  zone_id = data.aws_route53_zone.public_zone_core_vpc[0].zone_id
   name    = each.value.name
   records = [each.value.record]
 }
@@ -39,7 +53,7 @@ resource "aws_route53_record" "dns_validation_record_core_network_services" {
   ttl        = 300
   type       = "CNAME"
   for_each = var.is-production ? local.domain_validation_records : {}
-  zone_id = var.zone_id_core_network_services_public
+  zone_id = data.aws_route53_zone.public_zone_core_network_services[0].zone_id
   name    = each.value.name
   records = [each.value.record]
 }

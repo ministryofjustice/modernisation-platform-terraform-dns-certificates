@@ -31,13 +31,13 @@ resource "aws_acm_certificate" "certificate" {
 }
 
 resource "aws_route53_record" "dns_validation_record_core_vpc" {
-  for_each = {
+  for_each = var.is-production ? {} : tomap({
     for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.resource_record_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
-    } if !var.is-production
-  }
+    }
+  })
   
   provider = aws.core-vpc
   zone_id  = data.aws_route53_zone.public_zone_core_vpc[0].zone_id
@@ -52,13 +52,13 @@ resource "aws_route53_record" "dns_validation_record_core_vpc" {
 }
 
 resource "aws_route53_record" "dns_validation_record_core_network_services" {
-  for_each = {
+  for_each = var.is-production ? tomap({
     for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.resource_record_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
-    } if var.is-production
-  }
+    }
+  }) : {}
   
   provider = aws.core-network-services
   zone_id  = data.aws_route53_zone.public_zone_core_network_services[0].zone_id

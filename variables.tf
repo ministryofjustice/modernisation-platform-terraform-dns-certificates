@@ -26,8 +26,8 @@ variable "zone_name_core_vpc_public" {
   description = "Route53 core-vpc public hosted zone name for certificate validation. Required for non-production deployments"
   
   validation {
-    condition     = length(var.zone_name_core_vpc_public) < 64
-    error_message = "Zone name must be less than 64 characters."
+    condition     = length(var.zone_name_core_vpc_public) < 65
+    error_message = "Zone name must be less than 65 characters."
   }
 }
 

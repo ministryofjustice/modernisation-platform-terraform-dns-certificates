@@ -16,10 +16,12 @@ data "aws_route53_zone" "public_zone_core_network_services" {
 locals {
   fqdn = var.is-production ? trim(var.zone_name_core_network_services_public, ".") : trim(var.zone_name_core_vpc_public, ".")
   domain_validation_records = {
-    for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.resource_record_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-    }
+    for dvo in distinct([
+      for d in aws_acm_certificate.certificate.domain_validation_options : {
+        name   = d.resource_record_name
+        record = d.resource_record_value
+      }
+    ]) : dvo.name => dvo
   }
 }
 

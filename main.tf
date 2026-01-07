@@ -15,15 +15,6 @@ data "aws_route53_zone" "public_zone_core_network_services" {
 
 locals {
   fqdn = var.is-production ? trim(var.zone_name_core_network_services_public, ".") : trim(var.zone_name_core_vpc_public, ".")
-  # Create a map of unique validation records by resource_record_name
-  validation_records = {
-    for dvo in aws_acm_certificate.certificate.domain_validation_options :
-    dvo.resource_record_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-    }
-  }
 }
 
 resource "aws_acm_certificate" "certificate" {
@@ -40,25 +31,45 @@ resource "aws_acm_certificate" "certificate" {
 }
 
 resource "aws_route53_record" "dns_validation_record_core_vpc" {
-  provider = aws.core-vpc
-  for_each = var.is-production ? {} : local.validation_records
+  for_each = {
+    for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.resource_record_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    } if !var.is-production
+  }
   
-  zone_id = data.aws_route53_zone.public_zone_core_vpc[0].zone_id
-  name    = each.value.name
-  type    = each.value.type
-  records = [each.value.record]
-  ttl     = 300
+  provider = aws.core-vpc
+  zone_id  = data.aws_route53_zone.public_zone_core_vpc[0].zone_id
+  name     = each.value.name
+  type     = each.value.type
+  records  = [each.value.record]
+  ttl      = 300
+  
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_route53_record" "dns_validation_record_core_network_services" {
-  provider = aws.core-network-services
-  for_each = var.is-production ? local.validation_records : {}
+  for_each = {
+    for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.resource_record_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    } if var.is-production
+  }
   
-  zone_id = data.aws_route53_zone.public_zone_core_network_services[0].zone_id
-  name    = each.value.name
-  type    = each.value.type
-  records = [each.value.record]
-  ttl     = 300
+  provider = aws.core-network-services
+  zone_id  = data.aws_route53_zone.public_zone_core_network_services[0].zone_id
+  name     = each.value.name
+  type     = each.value.type
+  records  = [each.value.record]
+  ttl      = 300
+  
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_acm_certificate_validation" "prod" {

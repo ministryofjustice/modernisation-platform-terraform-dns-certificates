@@ -15,13 +15,14 @@ data "aws_route53_zone" "public_zone_core_network_services" {
 
 locals {
   fqdn = var.is-production ? trim(var.zone_name_core_network_services_public, ".") : trim(var.zone_name_core_vpc_public, ".")
-  domain_validation_records = {
-    for dvo in distinct([
-      for d in aws_acm_certificate.certificate.domain_validation_options : {
-        name   = d.resource_record_name
-        record = d.resource_record_value
-      }
-    ]) : dvo.name => dvo
+  # Create a map of unique validation records by resource_record_name
+  validation_records = {
+    for dvo in aws_acm_certificate.certificate.domain_validation_options :
+    dvo.resource_record_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
   }
 }
 
@@ -39,25 +40,25 @@ resource "aws_acm_certificate" "certificate" {
 }
 
 resource "aws_route53_record" "dns_validation_record_core_vpc" {
-  provider   = aws.core-vpc
-  depends_on = [aws_acm_certificate.certificate]
-  ttl        = 300
-  type       = "CNAME"
-  for_each = var.is-production ? {} : local.domain_validation_records
+  provider = aws.core-vpc
+  for_each = var.is-production ? {} : local.validation_records
+  
   zone_id = data.aws_route53_zone.public_zone_core_vpc[0].zone_id
   name    = each.value.name
+  type    = each.value.type
   records = [each.value.record]
+  ttl     = 300
 }
 
 resource "aws_route53_record" "dns_validation_record_core_network_services" {
-  provider   = aws.core-network-services
-  depends_on = [aws_acm_certificate.certificate]
-  ttl        = 300
-  type       = "CNAME"
-  for_each = var.is-production ? local.domain_validation_records : {}
+  provider = aws.core-network-services
+  for_each = var.is-production ? local.validation_records : {}
+  
   zone_id = data.aws_route53_zone.public_zone_core_network_services[0].zone_id
   name    = each.value.name
+  type    = each.value.type
   records = [each.value.record]
+  ttl     = 300
 }
 
 resource "aws_acm_certificate_validation" "prod" {

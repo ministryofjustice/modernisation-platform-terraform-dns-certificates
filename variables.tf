@@ -31,16 +31,6 @@ variable "zone_name_core_vpc_public" {
   }
 }
 
-variable "zone_name_core_network_services_public" {
-  type        = string
-  description = "Route53 core-network-services public hosted zone name for certificate validation. Required for production deployments"
-  
-  validation {
-    condition     = length(var.zone_name_core_network_services_public) < 64
-    error_message = "Zone name must be less than 64 characters."
-  }
-}
-
 variable "tags" {
   type        = map(string)
   description = "Common tags to be used by all resources"

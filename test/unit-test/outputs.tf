@@ -1,13 +1,15 @@
-# output "zone_id" {
-#   value = module.dns_mod.name
-# }
+output "certificate_domain" {
+  value = module.cert_module.certificate_domain
+}
 
-# output "vps_network" {
-#   value = var.networking[0].business-unit
+output "certificate_arn" {
+  value = module.cert_module.certificate_arn
+}
 
-# }
+output "certificate_id" {
+  value = module.cert_module.certificate_id
+}
 
-# output "localenv" {
-#   value = var.networking[0].set
-
-# }
+output "certificate_domain_validation_options" {
+  value = module.cert_module.certificate_domain_validation_options
+}

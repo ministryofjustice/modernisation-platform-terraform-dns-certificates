@@ -6,7 +6,7 @@ locals {
 resource "aws_acm_certificate" "certificate" {
   domain_name               = local.fqdn
   subject_alternative_names = var.is-production ? ["*.${local.fqdn}"] : concat(
-    ["${var.application_name}.${local.fqdn}", "*.${var.application_name}.${local.fqdn}"],
+    ["*.${var.application_name}.${local.fqdn}"],
     [for prefix in var.subject_alternative_names : "${prefix}.${var.application_name}.${local.fqdn}"]
   )
   validation_method         = "DNS"

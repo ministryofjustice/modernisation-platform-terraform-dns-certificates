@@ -21,8 +21,7 @@ variable "is-production" {
 
 variable "subject_alternative_names" {
   type        = list(string)
-  description = "Additional subject alternate name prefixes to add beyond the default wildcard (e.g., ['*.db', 'api'] becomes ['*.db.fqdn', 'api.fqdn'])"
-  default     = []
+  description = "Additional subject alternate name prefixes to add beyond the default values. There are *.fqdn and *.application_name.fqdn"
 }
 
 variable "zone_name_core_vpc_public" {

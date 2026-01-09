@@ -8,6 +8,10 @@ variable "production_service_fqdn" {
   type        = string
   description = "The fully qualified domain name for production deployments"
   default     = ""
+  validation {
+    condition     = var.is-production || length(var.production_service_fqdn) == 0
+    error_message = "variable production_service_fqdn is required when is-production is true."
+  }
 }
 
 variable "is-production" {

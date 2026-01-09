@@ -24,10 +24,28 @@ variable "subject_alternative_names" {
 variable "zone_name_core_vpc_public" {
   type        = string
   description = "Route53 core-vpc public hosted zone name for certificate validation. Required for non-production deployments"
-  
+  default = ""
   validation {
     condition     = length(var.zone_name_core_vpc_public) < 65
     error_message = "Zone name must be less than 65 characters."
+  }
+  validation {
+    condition     = var.is-production || length(var.zone_name_core_vpc_public) > 0
+    error_message = "zone_name_core_vpc_public is required when is-production is false."
+  }
+}
+
+variable "zone_name_core_network_services_public" {
+  type        = string
+  description = "Route53 core-network-services public hosted zone ID for certificate validation. Required for production deployments"
+  default     = ""
+  validation {
+    condition     = length(var.zone_name_core_network_services_public) < 65
+    error_message = "Zone name must be less than 65 characters."
+  }
+  validation {
+    condition     = !var.is-production || length(var.zone_name_core_network_services_public) > 0
+    error_message = "zone_name_core_network_services_public is required when is-production is true."
   }
 }
 

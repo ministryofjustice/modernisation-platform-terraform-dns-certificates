@@ -17,4 +17,24 @@ output "certificate_domain_validation_options" {
   value       = aws_acm_certificate.certificate.domain_validation_options
 }
 
+output "dns_validation_records_core_vpc" {
+  description = "Route53 DNS validation records created in core-vpc zone"
+  value       = aws_route53_record.dns_validation_record_core_vpc
+}
+
+output "dns_validation_records_core_network_services" {
+  description = "Route53 DNS validation records created in core-network-services zone"
+  value       = aws_route53_record.dns_validation_record_core_network_services
+}
+
+output "certificate_validation_prod" {
+  description = "Certificate validation resource for production"
+  value       = var.is-production ? aws_acm_certificate_validation.prod[0] : null
+}
+
+output "certificate_validation_non_prod" {
+  description = "Certificate validation resource for non-production"
+  value       = !var.is-production ? aws_acm_certificate_validation.non_prod[0] : null
+}
+
 

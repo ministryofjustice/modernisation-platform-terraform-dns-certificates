@@ -2,12 +2,12 @@
 locals {
   fqdn = var.is-production ? var.production_service_fqdn : trim(var.zone_name_core_vpc_public, ".")
 
-    domain_validation_records = {
-    for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-    }
+  domain_validation_records = {
+  for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
+    name   = dvo.resource_record_name
+    record = dvo.resource_record_value
   }
+}
 
 }
 

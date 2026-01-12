@@ -6,6 +6,8 @@
 
 This module provides a means by which users can create AWS ACM Certificates along with the required DNS validations. These validations support both non-production accounts using the core-vpc-external hosted zone data sources as well as production hosted zones defined in core-network-services.
 
+**NOTE: In all circumstances we recommend pinning the version of the module using the commit hash. See Github documentation for further information.**
+
 For Non-Production accounts. Note that application_name is required for non-production use.
 
 ```hcl

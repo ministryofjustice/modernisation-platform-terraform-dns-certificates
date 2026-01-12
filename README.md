@@ -10,6 +10,8 @@ This module provides a means by which users can create AWS ACM Certificates alon
 
 For Non-Production accounts. Note that application_name is required for non-production use.
 
+For Production accounts, the required domain usage delegation and hosted zone must be implemented before creating resources using this module. Please speak to the modernisation-platform team for further information on this.
+
 ```hcl
 module "cert_module" {
   source = "https://github.com/ministryofjustice/modernisation-platform-terraform-dns-certificates"
@@ -38,8 +40,8 @@ module "cert_module" {
   application_name                          = local.application_name
   subject_alternative_names                 = ["*.webapp"]
   is-production                             = local.is-production
-  production_service_fqdn                   = "servicename.modernisation-platform.service.justice.gov.uk"
-  zone_name_core_vpc_public                 = data.aws_route53_zone.external.name
+  production_service_fqdn                   = "servicename.service.justice.gov.uk"
+  zone_name_core_vpc_public                 = "servicename.service.justice.gov.uk
   tags                                      = local.tags
 }
 ```

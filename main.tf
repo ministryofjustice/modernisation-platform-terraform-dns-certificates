@@ -3,24 +3,24 @@ locals {
   fqdn = var.is-production ? var.production_service_fqdn : trim(var.zone_name_core_vpc_public, ".")
 
   domain_validation_records = {
-  for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
-    name   = dvo.resource_record_name
-    record = dvo.resource_record_value
+    for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+    }
   }
-}
 
 }
 
 resource "aws_acm_certificate" "certificate" {
-  domain_name               = local.fqdn
+  domain_name = local.fqdn
   subject_alternative_names = var.is-production ? [
     for prefix in var.subject_alternative_names : "${prefix}.${local.fqdn}"
-  ] : concat(
+    ] : concat(
     ["*.${var.application_name}.${local.fqdn}"],
     [for prefix in var.subject_alternative_names : "${prefix}.${var.application_name}.${local.fqdn}"]
   )
-  validation_method         = "DNS"
-  tags                      = var.tags
+  validation_method = "DNS"
+  tags              = var.tags
   lifecycle {
     create_before_destroy = true
   }

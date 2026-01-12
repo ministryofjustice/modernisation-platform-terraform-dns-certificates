@@ -35,7 +35,7 @@ variable "subject_alternative_names" {
 variable "zone_name_core_vpc_public" {
   type        = string
   description = "Route53 core-vpc public hosted zone name for certificate validation. Required for non-production deployments"
-  default = ""
+  default     = ""
   validation {
     condition     = length(var.zone_name_core_vpc_public) < 65
     error_message = "Zone name must be less than 65 characters."

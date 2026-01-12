@@ -3,6 +3,10 @@ variable "application_name" {
   type        = string
   description = "The application name to be used in non-production deployments"
   default     = ""
+  validation {
+    condition     = var.application_name == "" || can(regex("^[a-z]([a-z-]{0,61}[a-z])?$", var.application_name))
+    error_message = "Application name must be lowercase alphabetical characters with hyphens, start and end with a letter, and be 1-63 characters long."
+  }
 }
 
 variable "production_service_fqdn" {

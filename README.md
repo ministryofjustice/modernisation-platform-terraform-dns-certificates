@@ -1,8 +1,12 @@
-# Modernisation Platform Certification Module
+# Modernisation Platform DNS Certificates Module
 
 [![repo standards badge](https://github-community.service.justice.gov.uk/repository-standards/api/modernisation-platform-terraform-dns-certificates/badge)](https://github-community.service.justice.gov.uk/repository-standards/modernisation-platform-terraform-dns-certificates)
 
 ## Usage
+
+This module provides a means by which users can create AWS ACM Certificates along with the required DNS validations. These validations support both non-production accounts using the core-vpc-external hosted zone data sources as well as production hosted zones defined in core-network-services.
+
+For Non-Production accounts. Note that application_name is required for non-production use.
 
 ```hcl
 module "cert_module" {
@@ -11,14 +15,33 @@ module "cert_module" {
     aws.core-vpc              = aws.core-vpc
     aws.core-network-services = aws.core-network-services
   }
-  fqdn          = ""
-  is-production = ""
-  tags          = local.tags
-
+  application_name                          = local.application_name
+  subject_alternative_names                 = ["*.db"]
+  is-production                             = local.is-production
+  production_service_fqdn                   = ""
+  zone_name_core_vpc_public                 = data.aws_route53_zone.external.name
+  tags                                      = local.tags
 }
-
-
 ```
+
+For Production Accounts:
+
+```hcl
+module "cert_module" {
+  source = "https://github.com/ministryofjustice/modernisation-platform-terraform-dns-certificates"
+  providers = {
+    aws.core-vpc              = aws.core-vpc
+    aws.core-network-services = aws.core-network-services
+  }
+  application_name                          = local.application_name
+  subject_alternative_names                 = ["*.webapp"]
+  is-production                             = local.is-production
+  production_service_fqdn                   = "servicename.modernisation-platform.service.justice.gov.uk"
+  zone_name_core_vpc_public                 = data.aws_route53_zone.external.name
+  tags                                      = local.tags
+}
+```
+
 <!--- BEGIN_TF_DOCS --->
 
 

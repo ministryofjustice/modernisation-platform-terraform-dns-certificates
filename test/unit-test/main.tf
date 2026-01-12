@@ -22,4 +22,6 @@ module "cert_module_prod" {
   is-production                             = "true"
   zone_name_core_network_services_public    = "modernisation-platform.service.justice.gov.uk"
   tags                                      = local.tags
+  
+  depends_on = [module.cert_module_non_prod]
 }

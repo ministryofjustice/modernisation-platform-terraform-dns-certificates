@@ -46,6 +46,10 @@ module "cert_module" {
 }
 ```
 
+Where **servicename** is the agreed name for the application adhering to organisation public domain naming [standards](https://cloud-optimisation-and-accountability.justice.gov.uk/documentation/operations-engineering-legacy/operations-engineering-user-guide/dns/domain-naming-standard.html).
+
+For further information - please refer to our [User Guide](https://user-guide.modernisation-platform.service.justice.gov.uk/user-guide/how-to-configure-dns.html) on the subject.
+
 <!--- BEGIN_TF_DOCS --->
 
 

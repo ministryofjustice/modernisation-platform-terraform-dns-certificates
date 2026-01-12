@@ -3,10 +3,6 @@ variable "application_name" {
   type        = string
   description = "The application name to be used in non-production deployments"
   default     = ""
-  validation {
-    condition     = !var.is-production || length(var.application_name) == 0
-    error_message = "Value for application_name must be provided if environment is not production."
-  }
 }
 
 variable "production_service_fqdn" {
@@ -14,8 +10,8 @@ variable "production_service_fqdn" {
   description = "The fully qualified domain name for production deployments"
   default     = ""
   validation {
-    condition     = var.is-production || length(var.production_service_fqdn) == 0
-    error_message = "variable production_service_fqdn is required when is-production is true."
+    condition     = length(var.production_service_fqdn) < 65
+    error_message = "Production FQDN must be less than 65 characters."
   }
 }
 
@@ -37,10 +33,6 @@ variable "zone_name_core_vpc_public" {
     condition     = length(var.zone_name_core_vpc_public) < 65
     error_message = "Zone name must be less than 65 characters."
   }
-  validation {
-    condition     = !var.is-production || length(var.zone_name_core_vpc_public) == 0
-    error_message = "zone_name_core_vpc_public is required when is-production is false."
-  }
 }
 
 variable "zone_name_core_network_services_public" {
@@ -50,10 +42,6 @@ variable "zone_name_core_network_services_public" {
   validation {
     condition     = length(var.zone_name_core_network_services_public) < 65
     error_message = "Zone name must be less than 65 characters."
-  }
-  validation {
-    condition     = var.is-production || length(var.zone_name_core_network_services_public) == 0
-    error_message = "zone_name_core_network_services_public is required when is-production is true."
   }
 }
 

@@ -41,7 +41,7 @@ module "cert_module" {
   subject_alternative_names                 = ["*.webapp"]
   is-production                             = local.is-production
   production_service_fqdn                   = "servicename.service.justice.gov.uk"
-  zone_name_core_vpc_public                 = "servicename.service.justice.gov.uk
+  zone_name_core_vpc_public                 = "servicename.service.justice.gov.uk"
   tags                                      = local.tags
 }
 ```

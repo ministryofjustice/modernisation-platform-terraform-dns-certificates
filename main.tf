@@ -13,10 +13,9 @@ locals {
 
 resource "aws_acm_certificate" "certificate" {
   domain_name               = local.fqdn
-  subject_alternative_names = var.is-production ? concat(
-    ["*.${local.fqdn}"],
-    [for prefix in var.subject_alternative_names : "${prefix}.${local.fqdn}"]
-  ) : concat(
+  subject_alternative_names = var.is-production ? [
+    for prefix in var.subject_alternative_names : "${prefix}.${local.fqdn}"
+  ] : concat(
     ["*.${var.application_name}.${local.fqdn}"],
     [for prefix in var.subject_alternative_names : "${prefix}.${var.application_name}.${local.fqdn}"]
   )

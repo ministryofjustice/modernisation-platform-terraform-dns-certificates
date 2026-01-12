@@ -23,6 +23,13 @@ variable "is-production" {
 variable "subject_alternative_names" {
   type        = list(string)
   description = "Additional subject alternate name prefixes to add beyond the default values. There are *.fqdn and *.application_name.fqdn"
+  validation {
+    condition = alltrue([
+      for name in var.subject_alternative_names :
+      !can(regex("^\\*$", name)) && (can(regex("^\\*\\.", name)) ? length(split(".", name)) >= 2 : true)
+    ])
+    error_message = "The added Subject alternative names cannot be a bare wildcard '*'. Wildcards must include at least a subdomain, e.g., '*.app' or '*.db'."
+  }
 }
 
 variable "zone_name_core_vpc_public" {

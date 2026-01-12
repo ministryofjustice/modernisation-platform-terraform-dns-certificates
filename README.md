@@ -63,13 +63,24 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_fqdn"></a> [fqdn](#input\_fqdn) | DNS name to be used with the zone | `string` | n/a | yes |
-| <a name="input_is-production"></a> [is-production](#input\_is-production) | is this for production or non production | `bool` | n/a | yes |
+| <a name="input_application_name"></a> [application\_name](#input\_application\_name) | The application name to be used in non-production deployments | `string` | `""` | no |
+| <a name="input_is-production"></a> [is-production](#input\_is-production) | Whether the environment is production or not | `bool` | n/a | yes |
+| <a name="input_production_service_fqdn"></a> [production\_service\_fqdn](#input\_production\_service\_fqdn) | The fully qualified domain name for production deployments | `string` | `""` | no |
+| <a name="input_subject_alternative_names"></a> [subject\_alternative\_names](#input\_subject\_alternative\_names) | Additional subject alternate name prefixes to add beyond the default values. There are *.fqdn and *.application\_name.fqdn | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Common tags to be used by all resources | `map(string)` | n/a | yes |
+| <a name="input_zone_name_core_network_services_public"></a> [zone\_name\_core\_network\_services\_public](#input\_zone\_name\_core\_network\_services\_public) | Route53 core-network-services public hosted zone ID for certificate validation. Required for production deployments | `string` | `""` | no |
+| <a name="input_zone_name_core_vpc_public"></a> [zone\_name\_core\_vpc\_public](#input\_zone\_name\_core\_vpc\_public) | Route53 core-vpc public hosted zone name for certificate validation. Required for non-production deployments | `string` | `""` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cert_record"></a> [cert\_record](#output\_cert\_record) | n/a |
+| <a name="output_certificate_arn"></a> [certificate\_arn](#output\_certificate\_arn) | ARN of the ACM certificate |
+| <a name="output_certificate_domain"></a> [certificate\_domain](#output\_certificate\_domain) | n/a |
+| <a name="output_certificate_domain_validation_options"></a> [certificate\_domain\_validation\_options](#output\_certificate\_domain\_validation\_options) | Domain validation options for the certificate - used for DNS validation in another module |
+| <a name="output_certificate_id"></a> [certificate\_id](#output\_certificate\_id) | ID of the ACM certificate |
+| <a name="output_certificate_validation_non_prod"></a> [certificate\_validation\_non\_prod](#output\_certificate\_validation\_non\_prod) | Certificate validation resource for non-production |
+| <a name="output_certificate_validation_prod"></a> [certificate\_validation\_prod](#output\_certificate\_validation\_prod) | Certificate validation resource for production |
+| <a name="output_dns_validation_records_core_network_services"></a> [dns\_validation\_records\_core\_network\_services](#output\_dns\_validation\_records\_core\_network\_services) | Route53 DNS validation records created in core-network-services zone |
+| <a name="output_dns_validation_records_core_vpc"></a> [dns\_validation\_records\_core\_vpc](#output\_dns\_validation\_records\_core\_vpc) | Route53 DNS validation records created in core-vpc zone |
 <!-- END_TF_DOCS -->

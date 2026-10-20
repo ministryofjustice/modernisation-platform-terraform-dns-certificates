@@ -1,6 +1,6 @@
 # Modernisation Platform DNS Certificates Module
 
-[![repo standards badge](https://github-community.service.justice.gov.uk/repository-standards/api/modernisation-platform-terraform-dns-certificates/badge)](https://github-community.service.justice.gov.uk/repository-standards/modernisation-platform-terraform-dns-certificates)
+[![Standards Icon]][Standards Link] [![Scorecards Icon]][Scorecards Link] [![Code Quality Icon]][Code Quality Link]
 
 ## Usage
 
@@ -115,3 +115,10 @@ No modules.
 | <a name="output_dns_validation_records_core_network_services"></a> [dns\_validation\_records\_core\_network\_services](#output\_dns\_validation\_records\_core\_network\_services) | Route53 DNS validation records created in core-network-services zone |
 | <a name="output_dns_validation_records_core_vpc"></a> [dns\_validation\_records\_core\_vpc](#output\_dns\_validation\_records\_core\_vpc) | Route53 DNS validation records created in core-vpc zone |
 <!-- END_TF_DOCS -->
+
+[Standards Link]: https://github-community.service.justice.gov.uk/repository-standards/modernisation-platform-terraform-dns-certificates "Repo standards badge."
+[Standards Icon]: https://github-community.service.justice.gov.uk/repository-standards/api/modernisation-platform-terraform-dns-certificates/badge
+[Scorecards Icon]: https://img.shields.io/github/actions/workflow/status/ministryofjustice/modernisation-platform-terraform-dns-certificates/scorecards.yml?branch=main&labelColor=231f20&style=for-the-badge&label=Scorecards
+[Scorecards Link]: https://github.com/ministryofjustice/modernisation-platform-terraform-dns-certificates/actions/workflows/scorecards.yml
+[Code Quality Icon]: https://img.shields.io/github/actions/workflow/status/ministryofjustice/modernisation-platform-terraform-dns-certificates/code-quality.yml?branch=main&labelColor=231f20&style=for-the-badge&label=Code%20Quality
+[Code Quality Link]: https://github.com/ministryofjustice/modernisation-platform-terraform-dns-certificates/actions/workflows/code-quality.yml
